@@ -1,0 +1,7 @@
+node_modules
+
+# All Environment Variables file
+.env*
+
+# Except environment example file
+!.env.example

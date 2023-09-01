@@ -41,8 +41,14 @@ const SignUpFormWrapper = ({ apiPath = '', formData, hasFile = false, children }
 		}
 
 		try {
-			await axiosClient.post(`/${apiPath}/`, JSON.stringify(formData))
-			await fetchUserData(apiPath)
+			const authRes = await axiosClient.post(`/${apiPath}/`, JSON.stringify(formData))
+			if (!authRes) return
+
+			const res = await fetchUserData(apiPath)
+			if (!res) return
+
+			localStorage.setItem("USER_LOGGED_IN", "true");
+			localStorage.setItem("USER_TYPE", apiPath);
 			navigate('/myprofile');
 
 		} catch (error) {

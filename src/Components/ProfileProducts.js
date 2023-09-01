@@ -13,31 +13,31 @@ function ProfileProducts() {
 
 	return (
 		<div className="profileproduct">
-			{userInfo.products.length === 0 && (
+			{userInfo?.products?.length === 0 && (
 				<div>
 					<ImFilesEmpty size={200} />
 					<h1>No products uploaded yet.</h1>
 				</div>
 			)}
 
-			{userInfo.products.length > 0 &&
-				userInfo.products.map((product) => (
+			{userInfo?.products?.length > 0 &&
+				userInfo?.products?.map((product) => (
 					<EachFarmProductadmin {...product} key={product._id} />
 				))}
 
-			{userInfo.farmName && (
+			{userInfo?.farmName && (
 				<Link to="/uploadfarmproduct" className="uploadproduct">
 					<FiEdit size={30} />
 					<p>Upload Product</p>
 				</Link>
 			)}
-			{userInfo.storeName && (
+			{userInfo?.storeName && (
 				<Link to="/uploadstoreproduct" className="uploadproduct">
 					<FiEdit size={30} />
 					<p>Upload Product</p>
 				</Link>
 			)}
-			{userInfo.logisticsCompanyName && (
+			{userInfo?.logisticsCompanyName && (
 				<Link to="/uploadlogisticsvehicle" className="uploadproduct">
 					<FiEdit size={30} />
 					<p>Add new vehicle</p>

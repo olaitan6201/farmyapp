@@ -12,22 +12,22 @@ function ProfileMenu() {
 		<div className="profilemenu">
 			<img src={profback} alt="profile background" className="profback" />
 			<img
-				src={userInfo.avatar ? userInfo.avatar : profback}
+				src={userInfo?.avatar ? userInfo.avatar : profback}
 				alt="profile background"
 				className="profimg"
 			/>
 			<div className="profName">
-				{userInfo.farmName && (
-					<p className="profName">{userInfo.farmName}</p>
+				{userInfo?.farmName && (
+					<p className="profName">{userInfo?.farmName}</p>
 				)}
-				{userInfo.storeName && (
-					<p className="profName">{userInfo.storeName}</p>
+				{userInfo?.storeName && (
+					<p className="profName">{userInfo?.storeName}</p>
 				)}
-				{userInfo.logisticsCompanyName && (
-					<p className="profName">{userInfo.logisticsCompanyName}</p>
+				{userInfo?.logisticsCompanyName && (
+					<p className="profName">{userInfo?.logisticsCompanyName}</p>
 				)}
-				{/* <p className='profName'>{userInfo.farmName}</p> */}
-				<p className="profName">@{userInfo.username}</p>
+				{/* <p className='profName'>{userInfo?.farmName}</p> */}
+				<p className="profName">@{userInfo?.username}</p>
 			</div>
 			<div className="manuopt">
 				<Link>

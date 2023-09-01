@@ -90,14 +90,14 @@ function Navbar() {
 				/>
 
 				<img
-					src={userInfo.avatar ? userInfo.avatar : profback}
+					src={userInfo?.avatar ? userInfo.avatar : profback}
 					alt="farmImage"
 					className="Mprofback"
 				/>
 
 				<div className="mNameCont">
-					<p className="Mname profName">{userInfo.farmName}</p>
-					<p className="Mname profName">@{userInfo.username}</p>
+					<p className="Mname profName">{userInfo?.farmName}</p>
+					<p className="Mname profName">@{userInfo?.username}</p>
 				</div>
 				<div className="Mmenuitems">
 					<div className="Mmenuitem">

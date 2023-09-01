@@ -27,14 +27,22 @@ export const UserContextProvider = ({ children }) => {
 	// }, [loggedIn]);
 
 	const fetchUserData = async (type = "user") => {
-		if (!userInfo || Object.keys(userInfo).length === 0) return;
 		if (type.trim().length === 0) type = localStorage.getItem("USER_TYPE");
+		if (!type) return false;
 
 		try {
 			const res = await axiosClient.get(`/${type}/profile`);
 
 			setUserInfo(res.data);
-		} catch (error) {}
+
+			return true;
+		} catch (error) {
+			localStorage.removeItem("USER_LOGGED_IN");
+			setUserInfo(undefined);
+			setLoggedIn(false);
+
+			return false;
+		}
 	};
 
 	const userLogOut = async () => {
@@ -42,11 +50,12 @@ export const UserContextProvider = ({ children }) => {
 		if (!type) return;
 		try {
 			await axiosClient.post(`/${type}/logout`);
-
+		} catch (error) {
+		} finally {
 			localStorage.removeItem("USER_LOGGED_IN");
-			setUserInfo(null);
+			setUserInfo(undefined);
 			setLoggedIn(false);
-		} catch (error) {}
+		}
 	};
 
 	return (

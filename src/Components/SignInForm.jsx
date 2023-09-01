@@ -12,6 +12,8 @@ import axiosClient from "../clients/axios-client";
 function SignInForm({ apiPath = "" }) {
 	const navigate = useNavigate();
 
+	const [isLoading, setLoading] = useState(false)
+
 	const cookies = new Cookies();
 
 	// const [email, setEmail] = useState("");
@@ -37,6 +39,8 @@ function SignInForm({ apiPath = "" }) {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
+		setLoading(true)
+
 		try {
 			cookies.set("jwt", { path: "/" });
 			axiosClient.defaults.headers = {
@@ -47,18 +51,24 @@ function SignInForm({ apiPath = "" }) {
 			const email = emailRef.current.value;
 			const password = passwordRef.current.value;
 
-			await axiosClient.post(
+			const authRes = await axiosClient.post(
 				`/${apiPath}/auth`,
 				JSON.stringify({ email, password })
 			);
 
+			if (!authRes) return;
+
+			const res = await fetchUserData(apiPath);
+
+			if (!res) return;
+			console.log({ res });
 			localStorage.setItem("USER_LOGGED_IN", "true");
 			localStorage.setItem("USER_TYPE", apiPath);
-
-			await fetchUserData(apiPath);
 			navigate("/myprofile");
 		} catch (error) {
 			displayError(error?.response?.message);
+		} finally {
+			setLoading(false)
 		}
 	};
 
@@ -88,7 +98,13 @@ function SignInForm({ apiPath = "" }) {
 						/>
 					</div>
 
-					<button className="sign_bt">Submit</button>
+					<button className='sign_bt' disabled={isLoading}>
+						{isLoading ? (
+							<span className='loading-spinner' style={{maxHeight: '100', minHeight: '100'}}></span>
+						) : (
+							'Submit'
+						)}
+					</button>
 				</form>
 				<div className="already1">
 					Don't have an account?{" "}

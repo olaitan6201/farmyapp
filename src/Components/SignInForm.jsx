@@ -21,7 +21,7 @@ function SignInForm({ apiPath = "" }) {
 	const emailRef = useRef();
 	const passwordRef = useRef();
 
-	const { fetchUserData } = useUserContext();
+	const { fetchUserData, setLoggedIn } = useUserContext();
 
 	toastr.options = {
 		closeButton: true,
@@ -61,9 +61,10 @@ function SignInForm({ apiPath = "" }) {
 			const res = await fetchUserData(apiPath);
 
 			if (!res) return;
-			console.log({ res });
+			// console.log({ res });
 			localStorage.setItem("USER_LOGGED_IN", "true");
 			localStorage.setItem("USER_TYPE", apiPath);
+			setLoggedIn(true)
 			navigate("/myprofile");
 		} catch (error) {
 			displayError(error?.response?.message);
@@ -100,7 +101,7 @@ function SignInForm({ apiPath = "" }) {
 
 					<button className='sign_bt' disabled={isLoading}>
 						{isLoading ? (
-							<span className='loading-spinner' style={{maxHeight: '100', minHeight: '100'}}></span>
+							<span className='loading-spinner' style={{ maxHeight: '100', minHeight: '100' }}></span>
 						) : (
 							'Submit'
 						)}

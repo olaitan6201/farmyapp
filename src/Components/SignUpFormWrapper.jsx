@@ -11,7 +11,7 @@ const SignUpFormWrapper = ({ apiPath = '', formData, hasFile = false, children }
 
 	const [isLoading, setLoading] = useState(false)
 
-	const { fetchUserData } = useUserContext()
+	const { fetchUserData, setLoggedIn } = useUserContext()
 
 	toastr.options = {
 		closeButton: true,
@@ -41,7 +41,7 @@ const SignUpFormWrapper = ({ apiPath = '', formData, hasFile = false, children }
 		}
 
 		try {
-			const authRes = await axiosClient.post(`/${apiPath}/`, JSON.stringify(formData))
+			const authRes = await axiosClient.post(`/${apiPath}`, JSON.stringify(formData))
 			if (!authRes) return
 
 			const res = await fetchUserData(apiPath)
@@ -49,6 +49,7 @@ const SignUpFormWrapper = ({ apiPath = '', formData, hasFile = false, children }
 
 			localStorage.setItem("USER_LOGGED_IN", "true");
 			localStorage.setItem("USER_TYPE", apiPath);
+			setLoggedIn(true)
 			navigate('/myprofile');
 
 		} catch (error) {
